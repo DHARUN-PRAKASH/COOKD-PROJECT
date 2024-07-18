@@ -1,0 +1,47 @@
+POST http://localhost:1111/signup
+Content-Type: application/json
+
+{
+    "username":"dp",
+    "password":"1212",
+    "fullname":"Dharun",
+    "contact":11222121
+}
+
+###
+
+###
+
+POST http://localhost:1111/signin
+Content-Type: application/json
+
+{
+    "username":"dp",
+    "password":"1234"
+}
+
+###
+
+POST http://localhost:1111/postrecipe
+Content-Type: application/json
+
+{
+    "recipeId": 2,
+    "recipeName": "Chicken Biryani",
+    "cuisine": "Indian",
+    "ingredients": ["Rice","Chicken"],
+    "duration": "1 hour",
+    "type": "Main Course"
+}
+
+
+###
+### GET ALL RECIPE
+GET http://localhost:1111/
+
+###
+
+### GET RECIPE BY ID 
+GET http://localhost:1111/6699186c161cb8bff7f39834
+
+###
