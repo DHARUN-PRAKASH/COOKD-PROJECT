@@ -5,7 +5,7 @@ var accountSchema=new mongoose.Schema({
     password:{type:String},
     fullname:{type:String},
     contact:{type:Number},
-    wishlist:[{type:Number}]
+    wishlist:{type:Array}
 })
 
 const account = mongoose.model('account',accountSchema)

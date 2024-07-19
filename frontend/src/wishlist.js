@@ -15,7 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { updateWishlist } from './axios';
+import { getWishlist ,updateWishlist} from './axios';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,13 +28,15 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const Home = () => {
+const Wishlist = () => {
   const [recipes, setRecipes] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
+
+
   useEffect(() => {
     const fetchRecipes = async () => {
-        const response = await axios.get('http://localhost:1111/'); 
+        const response = await axios.get('http://localhost:1111/getwishlist/dpz'); 
         setRecipes(response.data); 
     };
 
@@ -46,14 +48,7 @@ const Home = () => {
   };
 
   const handleWishlist = async (recipeId) => {
-    const username = 'dpz'
-    const wishlist = recipeId
-    try {
-      await updateWishlist(username, wishlist);
-      alert('Wishlist updated successfully');
-    } catch (error) {
-      alert('error');
-    }
+
   };
 
   const handleShare = (recipeId) => {
@@ -120,4 +115,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Wishlist;

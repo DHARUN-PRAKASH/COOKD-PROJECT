@@ -6,28 +6,38 @@ export const callSignup = async (user) => {
             "http://localhost:1111/signup", user
         );
         // Add this line
-        return response.data;
+        return response;
     } catch (err) {
         console.error(err);
         return "An error occurred while fetching data.";
     }
 };
 
+
 export const callSignin = async (user) => {
-
-    const response = await axios.post(
+    try {
+      const response = await axios.post(
         "http://localhost:1111/signin", user
-    );
-    if (response.user) {
-        sessionStorage.setItem('logged', response.data.user.username)
-        window.location.assign("/home")
+      );
+      if (response.data.user) {
+        sessionStorage.setItem('logged', response.data.user.username);
+        window.location.assign("/home");
+      }
+    } catch (err) {
+      console.error(err);
+      return "An error occurred while signing in.";
+    }
+  };
+
+export const getWishlist = async (username) => {
+    try {
+      const response = await axios.get(`/getwishlist/${username}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching wishlist:', error);
+      throw error;
     }
-};
-
-export const fetchRecipes = async (user) => {
-
-
-}
+  };
 
 
 export const updateWishlist = async (username, wishlist) => {

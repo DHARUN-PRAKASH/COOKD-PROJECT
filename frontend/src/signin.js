@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react"
 import { callSignin } from './axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const defaultTheme = createTheme();
@@ -26,10 +27,13 @@ export default function SignIn() {
         password: '',
       });
 
+      const navi = useNavigate()
 
     const handleSubmit = async (event) => {
         const t = await callSignin(user)
         alert(JSON.stringify(t.data))
+        navi('/home')
+
         console.log(user)
     };                      
 

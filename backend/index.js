@@ -18,23 +18,25 @@ exp.post('/signup',async(request,response)=>{
     await newAccount.save()
     response.json({"message":newAccount.username+" has opened"})
 })
-
-exp.post('/signin', async (req, res) => {
-    const { username, password } = req.body;
-
-        const user = await account.findOne({ username, password });
-        if (user) {
-            const userWishlist = await wishlist.findOne({ username });
-            const response = {
-                username: user.username,
-                wishlist: userWishlist ? userWishlist.recipeId : [] 
-            };
-            res.json(response);
-        } else {
-            res.status(401).json({ message: "Invalid username or password" });
-        }
-});
-
+exp.post('/signin',async(req,res)=>{
+    try{
+      const user = req.body.username
+     const pass = req.body.password
+     const preuser = await account.findOne({'$and':[{"username":{'$eq':user}},{"password":{'$eq':pass}}]})
+     if(preuser){
+         const cred = {
+             "username":user,
+             "password":pass
+         }
+         res.json(cred)
+     }
+     else{
+         response.json({"message":"error"})
+     }
+    }catch(err){
+     res.status(500).json({"error":err})
+    }
+ })
 
 exp.post('/postrecipe',async(request,response)=>{
     const newRecipe = new recipe(request.body)
@@ -57,55 +59,55 @@ exp.get('/',async(request,response)=>{
 })
 // 
 
-// put wishlist
-exp.put('/update/:username/:wishlist',async(request,response)=>{
-    const data = await account.updateOne({username:{'$eq':request.params.username}},{ $push: { wishlist: request.params.wishlist }})
-    response.json(data)
-})
-// 
-
-// put wishlist try
+// // put wishlist
 // exp.put('/update/:username/:wishlist',async(request,response)=>{
-//     const data = await account.updateMany({ username: { $eq: request.params.username } },
-//         { $push: { wishlist: { recipeID:  request.params.username } } })
+//     const data = await account.updateOne({username:{'$eq':request.params.username}},{ $push: { wishlist: request.params.wishlist }})
 //     response.json(data)
 // })
 // 
 
-// get wishlist
-exp.get('/getwishlist/:username',async(request,response)=>{
-    const data = await account.findOne({ username: request.params.username }).populate('wishlist');
-    response.json(data.wishlist)
+// put wishlist try
+exp.put('/update/:username/:wishlist',async(request,response)=>{
+    const data = await account.updateMany({ username: { $eq: request.params.username } },
+        { $push: { wishlist: { recipeID:  request.params.wishlist} } })
+    response.json(data)
 })
+// 
+
+// get wishlist username 
+exp.get('/getwishlist/:username', async (request, response) => {
+    try {
+        const data = await account.findOne({ username: request.params.username });
+        if (!data) {
+            return response.status(404).json({ error: 'User not found' });
+        }
+        const recipeIds = data.wishlist.map(item => item.recipeID);
+
+        const recipes = await recipe.find({ recipeId: { $in: recipeIds } });
+
+        response.json(recipes);
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ error: 'Internal server error' });
+    }
+});
 // 
 
 // get wishlist recipe 
 
 
-exp.get('/getwishlistrecipe/:username', async (req, res) => {
-
-      // Find the user's account
-      const data = await account.findOne({ username: request.params.username }).populate('wishlist');
-      wishlist=data.wishlist
-      
-
-      
-
-  });
-
-  
 // exp.get('/getwishlistrecipe/:username', async (req, res) => {
 
-//     // Find the user's account
-//     const data = await account.findOne({ username: request.params.username }).populate('wishlist');
-//     wishlistdata=data.wishlist
-//     for (const recipeID of wishlistdata) {
-//       const data = await recipe.findOne({ recipeID });
-//       response.json(data)
-//     }
+//       // Find the user's account
+//       const data = await account.findOne({ username: request.params.username }).populate('wishlist');
+//       wishlist=data.wishlist
+      
 
-    
-// });
+      
+
+//   });
+
+
 
 
 

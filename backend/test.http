@@ -6,29 +6,27 @@ Content-Type: application/json
     "password":"3333",
     "fullname":"Dharun",
     "contact":11222121,
-     "wishlist":[1,2,3]
+     "wishlist":[ ]
 }
 
 ###
 
 ###
-
-POST http://localhost:1111/signin
+POST  http://localhost:1111/signin
 Content-Type: application/json
 
 {
-    "username":"dp",
-    "password":"1234"
+    "username":"dpz",
+    "password":"3333"
 }
-
 ###POST RECIPE
 
 POST http://localhost:1111/postrecipe
 Content-Type: application/json
 
 {
-    "recipeId": 365,
-    "recipeName": "Chicken 365",
+    "recipeId": "100",
+    "recipeName": "Chicken 100",
     "cuisine": "Indian",
     "ingredients":"chicken",
     "duration": "1 hour",
@@ -55,12 +53,9 @@ PUT http://localhost:1111/update/dp/66
 ###
 
 ### GET wishlist by username
-GET http://localhost:1111/getwishlist/dp
+GET http://localhost:1111/getwishlist/dpz
 
 ###
 
-### GET wishlist by username
-GET http://localhost:1111/getwishlistrecipe/dp
 
-###
 ###

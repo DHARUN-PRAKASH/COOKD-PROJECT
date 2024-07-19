@@ -16,6 +16,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { updateWishlist } from './axios';
+import Dash from './dash'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -63,7 +64,9 @@ const Home = () => {
   
 
   return (
-    <div style={{ marginTop: '80px', padding: '10px' }}>
+    <div> 
+        <Dash/>
+          <div style={{ marginTop: '80px', padding: '10px' }}>
       {recipes.map((recipe) => (
         <Card key={recipe.recipeId} sx={{ maxWidth: 345, marginBottom: '20px' }}>
           <CardHeader
@@ -80,8 +83,12 @@ const Home = () => {
             title={recipe.recipeName}
             subheader={`Cuisine: ${recipe.cuisine}`}
           />
-
- */}
+          {/* <CardMedia
+            component="img"
+            height="194"
+            image={`/static/images/cards/${recipe.image}`} 
+            alt={recipe.recipeName}
+          /> */}
           {/* <CardContent>
             <Typography variant="body2" color="text.secondary">
               {recipe.description}
@@ -113,6 +120,8 @@ const Home = () => {
         </Card>
       ))}
     </div>
+    </div>
+
   );
 };
 

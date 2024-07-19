@@ -1,21 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import SignUp from './signup';
-import Home from './demo';
-import Dash from './dash';
+import { BrowserRouter ,Routes,Route} from 'react-router-dom';
+import SignIn from './signin';
+import Home from './home';
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
-    <BrowserRouter>      
+    <BrowserRouter>
 
-      <Dash/>
-      <Routes>
-        <Route exact path='/demo' Component={()=><Home/>}/>
-
-      </Routes>
+ 
+ <Routes>
+  <Route path="/" element={<SignIn />} />
+  <Route path="/home" element={<Home />} />
+ </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
-

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 var recipeSchema=new mongoose.Schema({
-    recipeId: {type:Number},
+    recipeId: {type:String},
     recipeName: {type:String},
     cuisine: {type:String},
     ingrediant:[{  type:String}],
