@@ -2,10 +2,11 @@ POST http://localhost:1111/signup
 Content-Type: application/json
 
 {
-    "username":"dp",
-    "password":"1212",
+    "username":"dpz",
+    "password":"3333",
     "fullname":"Dharun",
-    "contact":11222121
+    "contact":11222121,
+     "wishlist":[1,2,3]
 }
 
 ###
@@ -20,16 +21,16 @@ Content-Type: application/json
     "password":"1234"
 }
 
-###
+###POST RECIPE
 
 POST http://localhost:1111/postrecipe
 Content-Type: application/json
 
 {
-    "recipeId": 2,
-    "recipeName": "Chicken Biryani",
+    "recipeId": 365,
+    "recipeName": "Chicken 365",
     "cuisine": "Indian",
-    "ingredients": ["Rice","Chicken"],
+    "ingredients":"chicken",
     "duration": "1 hour",
     "type": "Main Course"
 }
@@ -44,4 +45,22 @@ GET http://localhost:1111/
 ### GET RECIPE BY ID 
 GET http://localhost:1111/6699186c161cb8bff7f39834
 
+###
+
+
+
+### POST /add-to-wishlist
+
+PUT http://localhost:1111/update/dp/66
+###
+
+### GET wishlist by username
+GET http://localhost:1111/getwishlist/dp
+
+###
+
+### GET wishlist by username
+GET http://localhost:1111/getwishlistrecipe/dp
+
+###
 ###

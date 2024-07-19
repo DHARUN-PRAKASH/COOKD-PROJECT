@@ -57,6 +57,66 @@ exp.get('/',async(request,response)=>{
 })
 // 
 
+// put wishlist
+exp.put('/update/:username/:wishlist',async(request,response)=>{
+    const data = await account.updateOne({username:{'$eq':request.params.username}},{ $push: { wishlist: request.params.wishlist }})
+    response.json(data)
+})
+// 
+
+// put wishlist try
+// exp.put('/update/:username/:wishlist',async(request,response)=>{
+//     const data = await account.updateMany({ username: { $eq: request.params.username } },
+//         { $push: { wishlist: { recipeID:  request.params.username } } })
+//     response.json(data)
+// })
+// 
+
+// get wishlist
+exp.get('/getwishlist/:username',async(request,response)=>{
+    const data = await account.findOne({ username: request.params.username }).populate('wishlist');
+    response.json(data.wishlist)
+})
+// 
+
+// get wishlist recipe 
+
+
+exp.get('/getwishlistrecipe/:username', async (req, res) => {
+
+      // Find the user's account
+      const data = await account.findOne({ username: request.params.username }).populate('wishlist');
+      wishlist=data.wishlist
+      
+
+      
+
+  });
+
+  
+// exp.get('/getwishlistrecipe/:username', async (req, res) => {
+
+//     // Find the user's account
+//     const data = await account.findOne({ username: request.params.username }).populate('wishlist');
+//     wishlistdata=data.wishlist
+//     for (const recipeID of wishlistdata) {
+//       const data = await recipe.findOne({ recipeID });
+//       response.json(data)
+//     }
+
+    
+// });
+
+
+
+
+
+// 
+
+
+
+
+
 
 
 exp.listen(1111,()=>{

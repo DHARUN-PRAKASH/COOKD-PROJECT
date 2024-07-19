@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 
-var wishliSchema=new mongoose.Schema({
+var wishlistSchema=new mongoose.Schema({
     username:{type:String},
     recipeId: [{ type:Number}]
 
 })
 
-const wishlist = mongoose.model('wishlist',wishliSchema)
-module.exports=wishlist
+const wishlists = mongoose.model('wishlist',wishlistSchema)
+module.exports=wishlists

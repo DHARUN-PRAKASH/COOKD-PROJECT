@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import SignUp from './signup';
-import Home from './home';
+import Home from './demo';
 import Dash from './dash';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,7 +12,7 @@ root.render(
 
       <Dash/>
       <Routes>
-        <Route exact path='/home' Component={()=><Home/>}/>
+        <Route exact path='/demo' Component={()=><Home/>}/>
 
       </Routes>
     </BrowserRouter>

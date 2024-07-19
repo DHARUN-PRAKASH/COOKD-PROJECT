@@ -4,7 +4,7 @@ var recipeSchema=new mongoose.Schema({
     recipeId: {type:Number},
     recipeName: {type:String},
     cuisine: {type:String},
-    ingrediant: {type:Number},
+    ingrediant:[{  type:String}],
     duration: {type:String},
     type: {type:String},
 
