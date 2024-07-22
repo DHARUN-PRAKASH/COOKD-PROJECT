@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+import { Button, TextField, Box, Container, Card, CardContent, Typography, InputAdornment, Link, IconButton, Grid } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { callSignup } from './axios'; 
-
-const defaultTheme = createTheme();
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
+import LocalCafeRoundedIcon from '@mui/icons-material/LocalCafeRounded';
+import { callSignup } from './axios';
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import textLogo from './Cookd.png';
 
 export default function SignUp() {
   const [user, setUser] = useState({
@@ -29,107 +25,161 @@ export default function SignUp() {
       ...prevUser,
       [name]: value,
     }));
-    console.log(user)
   };
+  const nav = useNavigate();
 
   const handleSubmit = async (event) => {
-    const t = await callSignup(user)
-    alert(JSON.stringify(t.data))
-    console.log(user)
-};
+    event.preventDefault(); // Prevent form from reloading the page
+    const res = await callSignup(user);
+    alert(JSON.stringify(res.data));
+    nav("/");
+  };
+
+  const clearFields = () => {
+    setUser({
+      username: '',
+      password: '',
+      fullname: '',
+      contact: '',
+    });
+  };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="user-name"
-                  name="username"
-                  value={user.username}
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                  id="username"
-                  label="User Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="full-name"
-                  name="fullname"
-                  value={user.fullname}
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                  id="fullname"
-                  label="Full Name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="contact"
-                  name="contact"
-                  value={user.contact}
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                  id="contact"
-                  label="Contact "
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="new-password"
-                  name="password"
-                  value={user.password}
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                  id="password"
-                  label="password"
-                  type="password"
-                />
-              </Grid>
+    <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <Box sx={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
 
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit}
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
+        <Box sx={{
+          position: 'absolute',
+          top: '60%', 
+          left: '57%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: -1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '165%', 
+          height: '180%',
+        }}>
+          <LocalCafeRoundedIcon sx={{ width: '100%', height: '100%', color: '#ffffff'}} />
         </Box>
-      </Container>
-    </ThemeProvider>
+        
+ 
+        <Card sx={{ boxShadow: 'none', borderRadius: 2, padding: 2, width: '90%', maxWidth: 400, height: 'auto', borderRadius: '80px', position: 'relative', zIndex: 1 }}>
+          <CardContent sx={{ padding: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+  
+              <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: 2 }}>
+                <img src={textLogo} alt="Sign In" style={{ width: '90px', height: '90px', borderRadius: '70px' }} />
+                <Typography component="h1" variant="h5" sx={{ textAlign: 'left', ml: 2, fontSize: '2rem', color: '#d15e27', fontWeight: 'bold' }}>
+                  Sign Up !!
+                </Typography>
+              </Box>
+            </Box>
+            <Box component="form" noValidate sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Username"
+                    name="username"
+                    value={user.username}
+                    onChange={handleChange}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircle />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Full Name"
+                    name="fullname"
+                    value={user.fullname}
+                    onChange={handleChange}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PersonIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2} sx={{ mt: 2 }}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Contact"
+                    name="contact"
+                    value={user.contact}
+                    onChange={handleChange}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PhoneAndroidIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type="password"
+                    value={user.password}
+                    onChange={handleChange}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <LockIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit}
+                  fullWidth
+                  sx={{ marginRight: '10px', backgroundColor: '#d15e27', '&:hover': { backgroundColor: '#b54a1f' } }}
+                >
+                  Sign Up
+                </Button>
+                <IconButton
+                  onClick={clearFields}
+                  sx={{
+                    borderRadius: '50%',
+                    padding: '10px',
+                    color:'white',
+                    backgroundColor: '#d15e27',
+                    '&:hover': {
+                      backgroundColor: '#b54a1f'
+                    }
+                  }}
+                >
+                  <BackspaceRoundedIcon />
+                </IconButton>
+              </Box>
+              <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
+                Already have an account? <Link component={RouterLink} to="/" variant="body2" sx={{ color: '#d15e27' }}>Sign In</Link>
+              </Typography>
+            </Box>
+          </CardContent>
+        </Card>
+      </Box>
+    </Container>
   );
 }

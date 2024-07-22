@@ -24,16 +24,13 @@ Content-Type: application/json
 POST http://localhost:1111/postrecipe
 Content-Type: application/json
 
-{
-    "recipeId": "3",
-    "recipeName": "Mutton briyani",
-    "cuisine": "Indian",
-    "ingrediant":"Mutton,Rice ",
-    "duration": "1 hour",
-    "type": "Main Course"
-}
-
-
+    {
+        "recipeName": "Chocolate Cake",
+        "cuisine": "American",
+        "ingredient": "Chocolate, Flour, Sugar, Eggs, Butter, Baking Powder",
+        "duration": "60 minutes",
+        "type": "Dessert"
+    }
 ###
 ### GET ALL RECIPE
 GET http://localhost:1111/
@@ -47,13 +44,24 @@ GET http://localhost:1111/6699186c161cb8bff7f39834
 
 
 
-### POST /add-to-wishlist
+### PUT /add-to-wishlist
 
-PUT http://localhost:1111/update/dp/66
+PUT http://localhost:1111/update/dpz/6
+###
+
+### PUT /wishlist remove
+
+PUT http://localhost:1111/remove/dpz/6
 ###
 
 ### GET wishlist by username
 GET http://localhost:1111/getwishlist/dpz
+
+###
+
+
+### GET wishlist by username
+GET http://localhost:1111/recipename/Chicken 65
 
 ###
 

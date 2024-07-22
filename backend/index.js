@@ -5,6 +5,8 @@ const cors = require('cors')
 const account = require('./account')
 const recipe = require('./recipe')
 const wishlist = require('./wishlist')
+const { v4: uuidv4 } = require('uuid');
+
 
 
 const exp = express()
@@ -38,17 +40,48 @@ exp.post('/signin',async(req,res)=>{
     }
  })
 
-exp.post('/postrecipe',async(request,response)=>{
-    const newRecipe = new recipe(request.body)
-    await newRecipe.save()
-    response.json({"message":newRecipe.recipeName+" has added"})
-})
+ exp.post('/postrecipe', async (req, res) => {
+    try {
+      // Create a new recipe with a unique ID
+      const newRecipe = new recipe({
+        ...req.body,
+        recipeId: uuidv4() // Generate a unique recipe ID
+      });
+  
+      await newRecipe.save();
+      res.json({ message: `${newRecipe.recipeName} has been added` });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to add recipe' });
+    }
+  });
 
 // get recipe by id
 exp.get('/:id',async(request,response)=>{
     const get = await recipe.findById(id=request.params.id)
     response.json(get)
 })
+// 
+
+// get recipe by name
+
+exp.get('/getrecipename/:name', async (req, res) => {
+  try {
+    const recipeName = req.params.name;
+    const recipen = await recipe.findOne({ recipeName: recipeName });
+
+    if (!recipen) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    res.json(recipen);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
 // 
 
 // get recipe
@@ -67,11 +100,72 @@ exp.get('/',async(request,response)=>{
 // 
 
 // put wishlist try
-exp.put('/update/:username/:wishlist',async(request,response)=>{
-    const data = await account.updateMany({ username: { $eq: request.params.username } },
-        { $push: { wishlist: { recipeID:  request.params.wishlist} } })
-    response.json(data)
-})
+exp.put('/update/:username/:wishlist', async (request, response) => {
+    try {
+      // Find the user by username
+      const user = await account.findOne({ username: request.params.username });
+  
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+  
+      // Check if the recipeID is already in the wishlist
+      const isRecipeInWishlist = user.wishlist.some(
+        (item) => item.recipeID === request.params.wishlist
+      );
+  
+      if (isRecipeInWishlist) {
+        return response.status(400).json({ message: 'Recipe already in wishlist' });
+      }
+  
+      const data = await account.updateOne(
+        { username: request.params.username },
+        { $push: { wishlist: { recipeID: request.params.wishlist } } }
+      );
+  
+      response.json(data);
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+// 
+
+// pull wishlist delete the wishlist 
+
+exp.put('/remove/:username/:wishlist', async (request, response) => {
+    try {
+      // Find the user by username
+      const user = await account.findOne({ username: request.params.username });
+  
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+  
+      // Check if the recipeID is already in the wishlist
+      const isRecipeInWishlist = user.wishlist.some(
+        (item) => item.recipeID === request.params.wishlist
+      );
+  
+      if (!isRecipeInWishlist) {
+        return response.status(400).json({ message: 'Recipe not found in wishlist' });
+      }
+  
+      // Remove the recipeID from the wishlist
+      const data = await account.updateOne(
+        { username: request.params.username },
+        { $pull: { wishlist: { recipeID: request.params.wishlist } } }
+      );
+  
+      response.json(data);
+    } catch (error) {
+      console.error(error);
+      response.status(500).json({ message: 'Server error' });
+    }
+  });
+  
+
 // 
 
 // get wishlist username 

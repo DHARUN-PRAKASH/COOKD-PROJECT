@@ -1,123 +1,178 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { updateWishlist } from './axios';
+import React, { useState } from 'react';
+import { Button, TextField, Box, Container, Card, CardContent, Typography, InputAdornment, Link, IconButton, Grid, Avatar } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
+import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { callSignup } from './axios';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
-const Home = () => {
-  const [recipes, setRecipes] = useState([]);
-  const [expanded, setExpanded] = useState(false);
+const defaultTheme = createTheme();
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-        const response = await axios.get('http://localhost:1111/'); 
-        setRecipes(response.data); 
-    };
+export default function SignUp() {
+  const [user, setUser] = useState({
+    username: '',
+    password: '',
+    fullname: '',
+    contact: '',
+  });
 
-    fetchRecipes();
-  }, []);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
   };
 
-  const handleWishlist = async (recipeId) => {
-    const username = 'dpz'
-    const wishlist = recipeId
-    try {
-      await updateWishlist(username, wishlist);
-      alert('Wishlist updated successfully');
-    } catch (error) {
-      alert('error');
-    }
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // Prevent form from reloading the page
+    const res = await callSignup(user);
+    alert(JSON.stringify(res.data));
   };
 
-  const handleShare = (recipeId) => {
-    console.log('Recipe ID:', recipeId);
-    alert(`Sharing recipe ID: ${recipeId}`);
+  const clearFields = () => {
+    setUser({
+      username: '',
+      password: '',
+      fullname: '',
+      contact: '',
+    });
   };
-  
+
 
   return (
-    <div style={{ marginTop: '80px', padding: '10px' }}>
-      {recipes.map((recipe) => (
-        <Card key={recipe.recipeId} sx={{ maxWidth: 345, marginBottom: '20px' }}>
-          <CardHeader
-            avatar={
-              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {recipe.recipeName.charAt(0)}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={recipe.recipeName}
-            subheader={`Cuisine: ${recipe.cuisine}`}
-          />
-          <CardMedia
-            component="img"
-            height="194"
-            image={`/static/images/cards/${recipe.image}`} 
-            alt={recipe.recipeName}
-          />
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              {recipe.description}
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites" onClick={() => handleWishlist(recipe.recipeId)}>
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share" onClick={() => handleShare(recipe.recipeId)}>
-  <ShareIcon />
-</IconButton>
-
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Ingrediant:</Typography>
-              <Typography paragraph>{recipe.ingrediant}</Typography>
+    <ThemeProvider theme={defaultTheme}>
+      <Container maxWidth="xs" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <Box sx={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Card sx={{ boxShadow: 'none', borderRadius: 2, padding: 2, width: '90%', maxWidth: 400, height: 'auto', borderRadius: '50px' }}>
+            <CardContent sx={{ padding: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+                <Avatar sx={{ bgcolor: '#d15e27' }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+              </Box>
+              <Typography component="h1" variant="h5" sx={{ textAlign: 'center', mb: 2 }}>
+                Sign Up
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      label="Username"
+                      name="username"
+                      value={user.username}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      label="Full Name"
+                      name="fullname"
+                      value={user.fullname}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PersonIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} sx={{ mt: 2 }}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      label="Contact"
+                      name="contact"
+                      value={user.contact}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PhoneAndroidIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      label="Password"
+                      name="password"
+                      type="password"
+                      value={user.password}
+                      onChange={handleChange}
+                      variant="outlined"
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LockIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1 }}>
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit}
+                  fullWidth
+                  sx={{marginRight:'10px',
+                    backgroundColor: '#d15e27',
+                    '&:hover': {
+                      backgroundColor: '#b54a1f'
+                    }
+                  }}
+                >
+                  SignUp
+                </Button>
+                <IconButton
+                  onClick={clearFields}
+                  sx={{
+                    borderRadius: '50%',
+                    padding: '10px',
+                    backgroundColor: 'red',
+                    color: 'white',
+                    '&:hover': {
+                      backgroundColor: 'darkred'
+                    }
+                  }}
+                >
+                  <BackspaceRoundedIcon />
+                </IconButton>
+              </Box>
+                <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
+                  Already have an account? <Link href="#" variant="body2" sx={{ color: '#d15e27' }}>Sign In</Link>
+                </Typography>
+              </Box>
             </CardContent>
-          </Collapse>
-        </Card>
-      ))}
-    </div>
+          </Card>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
-};
-
-export default Home;
+}

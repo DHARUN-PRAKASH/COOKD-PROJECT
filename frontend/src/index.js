@@ -2,9 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
-import { SignIn } from './signin';
+
 import Home from './home';
 import Wishlist from './wishlist';
+import { SignIn } from './signin';
+import SignUp from './signup';
+
+
 
 
 
@@ -19,6 +23,7 @@ root.render(
           <Route  path='/' Component={SignIn}/>
           <Route path='/home'  Component={Home}/>
           <Route path='/wishlist'  Component={Wishlist}/>
+          <Route path='/signup'  Component={SignUp}/>
 
         </Routes>
     </BrowserRouter>
