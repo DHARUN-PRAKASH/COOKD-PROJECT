@@ -7,6 +7,7 @@ import BackspaceRoundedIcon from '@mui/icons-material/BackspaceRounded';
 import LocalDiningRoundedIcon from '@mui/icons-material/LocalDiningRounded';
 import WaterDamageRoundedIcon from '@mui/icons-material/WaterDamageRounded';
 import textLogo from './Cookd.png';
+import { Link as RouterLink } from 'react-router-dom';
 import './bg.css';
 
 export const SignIn = () => {
@@ -60,13 +61,13 @@ export const SignIn = () => {
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center',
-          transform: 'translateY(-10%)' // Adjust this value as needed
+          transform: 'translateY(-10%)' 
         }}>
           <LocalDiningRoundedIcon sx={{ width: '200%', height: '300%', color: '#ffffff' }} />
         </Box>
         <Card
           sx={{
-            boxShadow: 'none', // Removed shadow
+            boxShadow: 'none',
             borderRadius: 2,
             padding: 2,
             width: '90%',
@@ -76,19 +77,19 @@ export const SignIn = () => {
           }}
         >
           <CardContent sx={{ padding: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: 2 }}>
-                <img src={textLogo} alt="Sign In" style={{ width: '90px', height: '90px', borderRadius: '70px' }} />
-                <Typography component="h1" variant="h5" sx={{ textAlign: 'left', ml: 2, fontSize: '2rem', color: '#d15e27', fontWeight: 'bold' }}>
-                  Sign in !!
-                </Typography>
-              </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'row', gap: 2 }}>
+              <img src={textLogo} alt="Sign In" style={{ width: '90px', height: '90px', borderRadius: '70px' }} />
+              <Typography component="h1" variant="h5" sx={{ textAlign: 'left', ml: 2, fontSize: '2rem', color: '#d15e27', fontWeight: 'bold' }}>
+                Sign in !!
+              </Typography>
+            </Box>
             <Box
               component="form"
               sx={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
-                marginTop:'15px'
+                marginTop: '15px'
               }}
             >
               <TextField
@@ -129,21 +130,21 @@ export const SignIn = () => {
                   variant="contained"
                   onClick={handleSubmit}
                   fullWidth
-                  sx={{marginRight:'10px',
+                  sx={{ marginRight: '10px',
                     backgroundColor: '#d15e27',
                     '&:hover': {
                       backgroundColor: '#b54a1f'
                     }
                   }}
                 >
-                  SignIn
+                  Sign In
                 </Button>
                 <IconButton
                   onClick={clearFields}
                   sx={{
                     borderRadius: '50%',
                     padding: '10px',
-                    color:'white',
+                    color: 'white',
                     backgroundColor: '#d15e27',
                     '&:hover': {
                       backgroundColor: '#b54a1f'
@@ -153,7 +154,12 @@ export const SignIn = () => {
                   <BackspaceRoundedIcon />
                 </IconButton>
               </Box>
-              
+              <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
+                Don't have an account?{' '}
+                <Link component={RouterLink} to="/signup" sx={{ color: '#d15e27', fontWeight: 'bold' }}>
+                  Sign up
+                </Link>
+              </Typography>
             </Box>
           </CardContent>
         </Card>

@@ -121,7 +121,7 @@ const Home = () => {
                   title={recipe.recipeName}
                   subheader={`Cuisine: ${recipe.cuisine}`}
                 />
-                {/* <CardMedia
+                <CardMedia
                   component="img"
                   height="194"
                   image={`/static/images/cards/${recipe.image}`}
@@ -131,7 +131,7 @@ const Home = () => {
                   <Typography variant="body2" color="text.secondary">
                     {recipe.description}
                   </Typography>
-                </CardContent> */}
+                </CardContent>
                 <CardActions disableSpacing>
                   <IconButton
                     aria-label="add to favorites"

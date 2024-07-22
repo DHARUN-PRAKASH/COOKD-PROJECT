@@ -174,7 +174,7 @@ export default function SignUp() {
                 </IconButton>
               </Box>
               <Typography variant="body2" sx={{ mt: 2, textAlign: 'center' }}>
-                Already have an account? <Link component={RouterLink} to="/" variant="body2" sx={{ color: '#d15e27' }}>Sign In</Link>
+                Already have an account? <Link component={RouterLink} to="/" variant="body2" sx={{ color: '#d15e27',fontWeight: 'bold' }}>Sign In</Link>
               </Typography>
             </Box>
           </CardContent>
