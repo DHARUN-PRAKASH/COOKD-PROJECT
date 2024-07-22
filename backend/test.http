@@ -2,9 +2,9 @@ POST http://localhost:1111/signup
 Content-Type: application/json
 
 {
-    "username":"dpz",
-    "password":"3333",
-    "fullname":"Dharun",
+    "username":"Prakash",
+    "password":"2020",
+    "fullname":"Prakash",
     "contact":11222121,
      "wishlist":[ ]
 }
@@ -25,10 +25,10 @@ POST http://localhost:1111/postrecipe
 Content-Type: application/json
 
 {
-    "recipeId": "100",
-    "recipeName": "Chicken 100",
+    "recipeId": "3",
+    "recipeName": "Mutton briyani",
     "cuisine": "Indian",
-    "ingredients":"chicken",
+    "ingrediant":"Mutton,Rice ",
     "duration": "1 hour",
     "type": "Main Course"
 }

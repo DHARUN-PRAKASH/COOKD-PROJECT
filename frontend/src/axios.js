@@ -45,3 +45,8 @@ export const updateWishlist = async (username, wishlist) => {
         console.log('Wishlist added:', response.data);
   
 };
+
+export  const callcred = async (users)=>{
+    const log = await axios.post(`http://localhost:1111/signin`,users)
+    return log
+}

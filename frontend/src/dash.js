@@ -16,6 +16,8 @@ import MailIcon from '@mui/icons-material/Mail';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from 'react-router-dom';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,6 +59,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -77,8 +81,14 @@ export default function PrimarySearchAppBar() {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  const handleLogOut = ( ) => {
+    sessionStorage.removeItem('logged')
+    navi ('/')
+  }
+
+
+  const handleMobileMenuOpen = ( ) => {
+
   };
 
   const menuId = 'primary-search-account-menu';
@@ -99,7 +109,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -155,6 +165,13 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+  const navi = useNavigate()
+
+const handleFav =()=> {
+    navi("/wishlist")
+
+};
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" style={{backgroundColor:'#1e1e1e'}}>
@@ -187,7 +204,7 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-          <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleFav}>
               <Badge  color="error">
                 <FavoriteBorderSharpIcon />
               </Badge>
@@ -218,7 +235,7 @@ export default function PrimarySearchAppBar() {
               <AccountCircle />
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>    
             <IconButton
               size="large"
               aria-label="show more"

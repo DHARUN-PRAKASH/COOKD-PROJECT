@@ -16,6 +16,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getWishlist ,updateWishlist} from './axios';
+import Dash from './dash'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,14 +35,23 @@ const Wishlist = () => {
 
 
 
-  useEffect(() => {
-    const fetchRecipes = async () => {
-        const response = await axios.get('http://localhost:1111/getwishlist/dpz'); 
-        setRecipes(response.data); 
-    };
 
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('logged'); 
+    const desiredUsername = JSON.parse(user).username
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get(`http://localhost:1111/getwishlist/${desiredUsername}`);
+        setRecipes(response.data);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+      }
+    };
+  
     fetchRecipes();
   }, []);
+  
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -58,7 +68,9 @@ const Wishlist = () => {
   
 
   return (
-    <div style={{ marginTop: '80px', padding: '10px' }}>
+    <div> 
+        <Dash/>
+           <div style={{ marginTop: '80px', padding: '10px' }}>
       {recipes.map((recipe) => (
         <Card key={recipe.recipeId} sx={{ maxWidth: 345, marginBottom: '20px' }}>
           <CardHeader
@@ -112,6 +124,8 @@ const Wishlist = () => {
         </Card>
       ))}
     </div>
+    </div>
+
   );
 };
 

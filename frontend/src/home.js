@@ -45,16 +45,25 @@ const Home = () => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  
+
+  
 
   const handleWishlist = async (recipeId) => {
-    const username = 'dp'
+    const user = sessionStorage.getItem('logged'); 
+    const username =JSON.parse(user).username
+
     const wishlist = recipeId
+   
     try {
       await updateWishlist(username, wishlist);
       alert('Wishlist updated successfully');
     } catch (error) {
       alert('error');
     }
+
+    
+    
   };
 
   const handleShare = (recipeId) => {
