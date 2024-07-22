@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { callcred } from "./axios";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { TextField, Button, Box, Container, Card, CardContent, Typography, InputAdornment, Link, IconButton } from "@mui/material";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LockIcon from '@mui/icons-material/Lock';
@@ -16,8 +15,6 @@ export const SignIn = () => {
     password: ""
   });
 
-  const nav = useNavigate();
-
   const collect = (eve) => {
     const { name, value } = eve.target;
     setUsers((old) => ({
@@ -31,7 +28,7 @@ export const SignIn = () => {
     alert(JSON.stringify(res));
     if (res.data) {
       sessionStorage.setItem("logged", JSON.stringify(users));
-      nav("/home");
+      window.location.assign("/")
     }
   };
 
@@ -156,9 +153,7 @@ export const SignIn = () => {
                   <BackspaceRoundedIcon />
                 </IconButton>
               </Box>
-              <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                Don't have an account? <Link component={RouterLink} to="/signup" sx={{ color: '#d15e27' }}>Sign Up</Link>
-              </Typography>
+              
             </Box>
           </CardContent>
         </Card>

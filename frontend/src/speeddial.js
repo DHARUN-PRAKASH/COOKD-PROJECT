@@ -6,8 +6,7 @@ import SpeedDialAction from '@mui/material/SpeedDialAction';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import { styled } from '@mui/material/styles';
-import RecipeDialog from './RecipeDialog'; // Adjust the import path as necessary
-
+import RecipeDialog from './RecipeDialog'; 
 const CustomSpeedDialIcon = styled(SpeedDialIcon)(({ theme }) => ({
   backgroundColor: '#d15e27',
   color: '#fff',

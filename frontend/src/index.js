@@ -15,27 +15,20 @@ import SignUp from './signup';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  sessionStorage.getItem('logged')
+  (sessionStorage.getItem('logged'))
   ?
     <>
     <BrowserRouter>
         <Routes>
-          <Route  path='/' Component={SignIn}/>
-          <Route path='/home'  Component={Home}/>
-          <Route path='/wishlist'  Component={Wishlist}/>
-          <Route path='/signup'  Component={SignUp}/>
-
+        <Route exact path='/' Component={()=><Home/>}/>
+        <Route exact path='/wishlist' Component={()=><Wishlist/>}/>
+        <Route exact path='/signup' Component={()=><SignUp/>}/>
         </Routes>
     </BrowserRouter>
     </>
     :
-    <>
-     <BrowserRouter>
-        <Routes>
-          <Route  path='/' Component={SignIn}/>
-        </Routes>
-    </BrowserRouter>
-    </>
+    <SignIn/>
+      
   
 
 );

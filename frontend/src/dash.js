@@ -117,7 +117,7 @@ export default function PrimarySearchAppBar() {
 
   const handleLogOut = () => {
     sessionStorage.removeItem('logged');
-    navi('/');
+    window.location.assign("/")
   };
 
   const handleMobileMenuOpen = (event) => {
