@@ -13,6 +13,10 @@ const exp = express()
 exp.use(cors())
 exp.use(parser.urlencoded({extended:true}))
 exp.use(parser.json())
+exp.use(express.static ('public' ) )
+
+
+
 
 
 exp.post('/signup',async(request,response)=>{

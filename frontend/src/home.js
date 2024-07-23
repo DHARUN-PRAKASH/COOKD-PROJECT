@@ -124,7 +124,7 @@ const Home = () => {
                 <CardMedia
                   component="img"
                   height="194"
-                  image={`/static/images/cards/${recipe.image}`}
+                  image={`http://localhost:1111/Images/${recipe.image}`}
                   alt={recipe.recipeName}
                 />
                 <CardContent>
